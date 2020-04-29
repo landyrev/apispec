@@ -379,7 +379,7 @@ def field2property(field, spec=None, use_refs=True, dump=True, name=None):
     elif isinstance(field, marshmallow.fields.List):
         ret['items'] = field2property(field.container, spec=spec, use_refs=use_refs, dump=dump)
     elif isinstance(field, marshmallow.fields.Dict):
-        if MARSHMALLOW_VERSION_INFO[0] >= 3:
+        if getattr(field, 'value_container', None):
             if field.value_container:
                 ret['additionalProperties'] = field2property(
                     field.value_container, spec=spec, use_refs=use_refs, dump=dump)
